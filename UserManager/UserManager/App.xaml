@@ -1,0 +1,156 @@
+﻿<Application x:Class="UserManager.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:UserManager"
+             StartupUri="MainWindow.xaml">
+    
+    <!--для работы со стилями-->
+    <Application.Resources>
+        <ResourceDictionary>
+            <Color x:Key="BackColor" >#FF323232</Color>
+            <Color x:Key="FrontColor" >#FFF</Color>
+            <Color x:Key="LineColor">Red</Color>
+
+            <SolidColorBrush x:Key="BackBrush" Color="{StaticResource BackColor}"></SolidColorBrush>
+            <SolidColorBrush x:Key="FrontBrush" Color="{StaticResource FrontColor}"></SolidColorBrush>
+            <!--<SolidColorBrush x:Key="LineBrush" Color="{StaticResource LineColor}"></SolidColorBrush>-->
+
+            <Style TargetType="Grid">
+                <Setter Property="Background" Value="{StaticResource BackBrush}"></Setter>
+            </Style>
+            <Style TargetType="DataGrid">
+                <Setter Property="Background" Value="{StaticResource BackBrush}"></Setter>
+                <Setter Property="Foreground" Value="{StaticResource FrontBrush}"></Setter>
+            </Style>
+            <Style TargetType="DataGridColumnHeader">
+                <Setter Property="Background" Value="{StaticResource BackBrush}" />
+            </Style>
+            <Style TargetType="DataGridCell">
+                <Setter Property="Background" Value="{StaticResource BackBrush}" />
+                <!--<Setter Property="Foreground" Value="{StaticResource FrontBrush}" />-->
+            </Style>
+            
+            <!--<Style TargetType="TextBox">
+                <Setter Property="Background" Value="{StaticResource BackBrush}"></Setter>
+            </Style>-->
+
+            <Style TargetType="Label">
+                <Setter Property="Foreground" Value="{StaticResource FrontBrush}"></Setter>
+                <Setter Property="Background" Value="{StaticResource BackBrush}"></Setter>
+            </Style>
+            
+            <Style TargetType="ComboBox">
+                <Setter Property="Foreground" Value="{StaticResource FrontBrush}"></Setter>
+                <Setter Property="Background" Value="{StaticResource BackBrush}"></Setter>
+            </Style>
+            <Style TargetType="ComboBoxItem">
+                <Setter Property="Foreground" Value="{StaticResource FrontBrush}"></Setter>
+                <Setter Property="Background" Value="{StaticResource BackBrush}"></Setter>
+            </Style>
+            
+            <Style TargetType="TextBlock">
+                <Setter Property="Foreground" Value="{StaticResource FrontBrush}"></Setter>
+                <Setter Property="Background" Value="{StaticResource BackBrush}"></Setter>
+            </Style>
+
+            <Style TargetType="ListView">
+                <Setter Property="Background" Value="{StaticResource BackBrush}"></Setter>
+            </Style>
+
+
+            <Style TargetType="Button">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            
+                            <Border x:Name="ButtonBorder" 
+                                    Margin="0" 
+                                    BorderThickness="1" >
+                                <Border.BorderBrush>
+                                    <SolidColorBrush x:Name="ButtonBorderBrush" Color="Red"/>
+                                </Border.BorderBrush>
+                                <Label Content="{TemplateBinding Content}"  
+                                       HorizontalContentAlignment="Center" 
+                                       Padding="1">
+                                </Label>
+                            </Border>
+                            
+                            <ControlTemplate.Triggers>
+                                <Trigger SourceName="ButtonBorder" Property="IsMouseOver" Value="True">
+                                    <Trigger.EnterActions>
+                                        <!--запуск анимации-->
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation
+                                                    Storyboard.TargetName="ButtonBorderBrush"
+                                                    Storyboard.TargetProperty="Color"
+                                                    To="Yellow"
+                                                    Duration="0:0:0:.5"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.EnterActions>
+                                    
+                                    <Trigger.ExitActions>
+                                        <!--запуск анимации-->
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation
+                                                    Storyboard.TargetName="ButtonBorderBrush"
+                                                    Storyboard.TargetProperty="Color"
+                                                    To="Red"
+                                                    Duration="0:0:0:5"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.ExitActions>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                            
+                        </ControlTemplate>
+                        
+                    </Setter.Value>
+                    
+                </Setter>
+            </Style>
+
+            <Style TargetType="TextBox">
+                <Setter Property="SnapsToDevicePixels" Value="True"/>
+                <Setter Property="OverridesDefaultStyle" Value="True"/>
+                <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="MinWidth" Value="120"/>
+                <Setter Property="MinHeight" Value="20"/>
+                <Setter Property="AllowDrop" Value="true"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="TextBox">
+                            <Border x:Name="TextBoxBorder"
+                                    BorderThickness="1">
+                                <Border.BorderBrush>
+                                    <SolidColorBrush x:Name="TextBoxBorderBrush" Color ="Red"/>
+                                </Border.BorderBrush>
+                                <ScrollViewer x:Name="PART_ContentHost" Background="AliceBlue"/>
+                             </Border>
+                            
+                            <ControlTemplate.Triggers>
+                                <EventTrigger SourceName="PART_ContentHost" RoutedEvent="Loaded">
+                                    <!--запуск анимации-->
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="PART_ContentHost"
+                                                Storyboard.TargetProperty="Opacity"
+                                                From="0"
+                                                To="1"
+                                                Duration="0:0:0:5"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                                
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

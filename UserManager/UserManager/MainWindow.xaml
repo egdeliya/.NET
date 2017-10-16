@@ -1,0 +1,78 @@
+﻿<Window x:Class="UserManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UserManager"
+        xmlns:userManager="clr-namespace:UserManager"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="376.333" Width="588">
+    <Window.DataContext>
+        <userManager:MainViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="291*"/>
+            <ColumnDefinition Width="27*"/>
+            <ColumnDefinition Width="163*"/>
+            <ColumnDefinition Width="37*"/>
+        </Grid.ColumnDefinitions>
+        <DataGrid x:Name="UserTable" CanUserAddRows="False" ItemsSource="{Binding UserList}" HorizontalAlignment="Left" Margin="10,96,0,-0.333" VerticalAlignment="Top" Height="225" Width="268" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" Header="Имя" Width="2*"/>
+                <DataGridTextColumn Binding="{Binding Phone}" ClipboardContentBinding="{x:Null}" Header="Телефон" Width="1*"/>
+                <DataGridTextColumn Binding="{Binding Email}" ClipboardContentBinding="{x:Null}" Header="Почта" Width="1*"/>
+                <DataGridTextColumn Binding="{Binding Type}" ClipboardContentBinding="{x:Null}" Header="Права" Width="1*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="btn_load" Content="Load users" HorizontalAlignment="Left" Height="30" Margin="10,10,0,0" VerticalAlignment="Top" Width="73" Command="{Binding LoadUserCommand}"/>
+        <Button x:Name="btn_createUser" Content="Create user" HorizontalAlignment="Left" Margin="108,10,0,0" VerticalAlignment="Top" Width="75" Height="30" Command="{Binding CreateUserCommand}"/>
+        <ListView x:Name="listView" ItemsSource="{Binding UserList}" Height="215" Margin="7.71,96,9.666,0" VerticalAlignment="Top" Grid.ColumnSpan="3" HorizontalContentAlignment="Stretch" Grid.Column="1">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <TextBlock Text="{Binding Name}"/>
+                        <Button Content="Edit" 
+                                HorizontalContentAlignment="Center" 
+                                HorizontalAlignment="Right" 
+                                Padding="15,1,15,2" 
+                                CommandParameter="{Binding}"
+                                Command="{Binding Mode=OneWay, 
+                                        RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, 
+                                        Path=DataContext.EditUserCommand}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <TextBox x:Name="name" Text="{Binding FilterString, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="38,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="73" RenderTransformOrigin="0.948,0.435"/>
+        <TextBox x:Name="phone" Text="{Binding FilterPhone, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="170,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="75"/>
+        <Label x:Name="label" HorizontalAlignment="Left" Margin="0,57,0,0" VerticalAlignment="Top" Height="23" Width="33" Content="Имя:"/>
+        <Label x:Name="label1" HorizontalAlignment="Left" Margin="111,57,0,0" Content="Телефон:" VerticalAlignment="Top" Height="23"/>
+        <TextBox x:Name="email" Text="{Binding FilterEmail, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="7.333,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="74" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <Label x:Name="label2" HorizontalAlignment="Left" Margin="262,57,0,0" Content="Почта:" VerticalAlignment="Top" Height="23"/>
+        <Label x:Name="label3" Grid.Column="2" Margin="60,57,58.333,0" Content="Права:" VerticalAlignment="Top" Height="23"/>
+        <ComboBox x:Name="accessBox" Text="{Binding FilterType, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" Grid.Column="2" HorizontalAlignment="Left" Margin="122.667,57,0,0" VerticalAlignment="Top" Width="91">
+            <ComboBoxItem Content="Пользователь">
+                <ComboBoxItem.DataContext>
+                    <userManager:UserType>User</userManager:UserType>
+                </ComboBoxItem.DataContext>
+            </ComboBoxItem>
+            <ComboBoxItem Content="Модератор">
+                <ComboBoxItem.DataContext>
+                    <userManager:UserType>Moderator</userManager:UserType>
+                </ComboBoxItem.DataContext>
+            </ComboBoxItem>
+            <ComboBoxItem Content="Админ">
+                <ComboBoxItem.DataContext>
+                    <userManager:UserType>Admin</userManager:UserType>
+                </ComboBoxItem.DataContext>
+            </ComboBoxItem>
+            <ComboBoxItem Content="Любые">
+                <ComboBoxItem.DataContext>
+                    <userManager:UserType>Admin</userManager:UserType>
+                </ComboBoxItem.DataContext>
+            </ComboBoxItem>
+        </ComboBox>
+
+    </Grid>
+</Window>
