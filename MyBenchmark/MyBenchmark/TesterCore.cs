@@ -29,16 +29,9 @@ namespace MyBenchmark
 
         private static void RunTest(MethodInfo method, Type type)
         {
-            var timer = new Stopwatch();
-
-            var myTestAttrib = method.GetCustomAttribute<MyTestAttribute>();
-            var paramsAttrib = method.GetCustomAttribute<ParamsAttribute>();
-
             if (!method.IsStatic)
             {
                 RunTestForNotStatic(method, type);
-
-                //throw new NotImplementedException("Статические методы не поддерживаются, сделайте ДЗ!");
             }
             else
             {
@@ -56,6 +49,13 @@ namespace MyBenchmark
 
             if (paramsAttrib != null)
             {
+                if (method.GetParameters().Length.Equals(0))
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("Метод без параметров вызван с атрибутом Params");
+                }
+
+                Console.Write("method get parameters \n" + method.GetParameters().Length);
                 foreach (var param in paramsAttrib.Params)
                 {
                     timer.Restart(); // Reset + Start
@@ -77,6 +77,11 @@ namespace MyBenchmark
             }
             else
             {
+                if (!method.GetParameters().Length.Equals(0))
+                {
+                    throw new CustomAttributeFormatException("Метод с параметрами не помечен атрибутом Params!");
+                }
+               
                 timer.Restart(); // Reset + Start
 
                 Console.Write("Begin {0}...", method.Name);
@@ -104,7 +109,11 @@ namespace MyBenchmark
 
             if (paramsAttrib == null)
             {
-                //throw new NotImplementedException("Методы без параметров не поддерживаются, сделайте ДЗ!");
+                if (!method.GetParameters().Length.Equals(0))
+                {
+                    throw new CustomAttributeFormatException("Метод с параметрами не помечен атрибутом Params!");
+                }
+
                 timer.Restart(); // Reset + Start
 
                 Console.Write("Begin {0}...", method.Name);
@@ -124,6 +133,13 @@ namespace MyBenchmark
             }
             else
             {
+                if (method.GetParameters().Length.Equals(0))
+                {
+                    ConsoleColor currentForeground = ConsoleColor.Yellow;
+                    Console.WriteLine("Метод без параметров вызван с атрибутом Params",
+                        currentForeground);
+                }
+
                 foreach (var param in paramsAttrib.Params)
                 {
                     timer.Restart(); // Reset + Start

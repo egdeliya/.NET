@@ -13,8 +13,7 @@ namespace MyBenchmark
             p2 = p4 = p6 = false;
         }
 
-        //todo: Сделать ДЗ, эти методы должны тестироватся
-        //[MyTest(1000)]
+        [MyTest(1000)]
         public void Framework()
         {
             q1 = Convert.ToInt32(p1);
@@ -25,7 +24,7 @@ namespace MyBenchmark
             q6 = Convert.ToInt32(p6);
         }
 
-        //[MyTest(1000)]
+        [MyTest(1000)]
         public void IfThenElse()
         {
             q1 = p1 ? 1 : 0;
