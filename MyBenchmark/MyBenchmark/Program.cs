@@ -45,7 +45,7 @@ namespace MyBenchmark
 
         // метод без параметров
         [MyTest]
-        public static void Test3()
+        public void Test3()
         {
             var md5 = MD5.Create();
             var data = new byte[100];
