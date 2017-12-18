@@ -102,6 +102,9 @@ namespace GameCore.Managers
         public void LoadWorld(string file, string terrainFile)
         {
             ClearWorld();
+
+            // так как не считаваем terrain из save.json, нужно 
+            // добавить его вручную
             AddObject(new Terrain(terrainFile));
 
             if (File.Exists(file))
@@ -182,6 +185,8 @@ namespace GameCore.Managers
 
         public void Save(string file)
         {
+
+            // чтобы не сохранять terrain
             var needToSaveObjects = new List<GameObject>();
             foreach (var obj in objects)
             {

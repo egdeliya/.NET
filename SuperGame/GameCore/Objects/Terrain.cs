@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.IO;
 using System.Numerics;
+using GameCore.Models;
 using GameCore.Render;
 
 namespace GameCore.Objects
@@ -24,28 +26,11 @@ namespace GameCore.Objects
 
             Name = "Terrain";
 
-            //foreach (var row in data)
-            //{
-            //    Map.Add(row);
-            //}
         }
 
         public override void OnAttachToWorld()
         {
-            //if (Map.Count == 0)
-            //{
-            //    for (var i = 0; i < TerrainSize; i++)
-            //    {
-            //        var row = "";
-            //        for (var j = 0; j < TerrainSize; j++)
-            //        {
-            //            row += "25 ";
-            //        }
-            //        Map.Add(row);
-            //    }
-            //}
-
-            if (World.RenderManager != null)
+           if (World.RenderManager != null)
             {
                 var offset = new Vector2(TerrainCellSize * TerrainSize, TerrainCellSize * TerrainSize);
                 offset /= 2;
@@ -61,12 +46,37 @@ namespace GameCore.Objects
 
                         cell.ImageName = "terrain\\topdownTile_" + mapRow[j];
 
+                        if (mapRow[j].Equals("12"))
+                            AddPhysicsModel(cell);
+
                         primitives[i, j] = cell;
                     }
+
                 }
+
+                
             }
 
             base.OnAttachToWorld();
+        }
+
+        // тут просто захардкожено добавление физических моделей к определённым ячейкам
+        public void AddPhysicsModel(IRenderPrimitive initPrimitive)
+        {
+            var cellWithPhysics = new MapObject
+            {
+                Position = initPrimitive.Position,
+                Size = initPrimitive.Size
+            };
+
+            var PhysicModel = new PhysicsSphere
+            {
+                IsSatatic = true,
+                Radius = cellWithPhysics.Size.Length() / 2.0f,
+                MapObject = cellWithPhysics
+            };
+
+            World.PhysicsManager.Models.Add(PhysicModel);
         }
 
         public override void OnDetach()
