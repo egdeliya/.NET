@@ -69,14 +69,14 @@ namespace Game
             World.LoadWorld(saveFile);
         }
 
-        public void Close()
-        {
-            World.EndSimulation();
-        }
-
         private void ButtonCreate_Click(object sender, RoutedEventArgs e)
         {
             World.CreateDefaultWorld();
+        }
+
+        public void Close()
+        {
+            World.EndSimulation();
         }
     }
 }

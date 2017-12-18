@@ -21,10 +21,9 @@ namespace GameCore.Managers
         private List<GameObject> needAttachObjects;
         private Thread simulationThread;
         private bool isSimulation;
-
+  
         public IRenderManager RenderManager { get; set; }
         public InputManager InputManager { get; set; }
-
         public Physics PhysicsManager { get; set; }
 
         public World()
@@ -70,9 +69,8 @@ namespace GameCore.Managers
 
                 if (RenderManager != null)
                 {
-                    //RenderManager.RunInUIThread(RemoveAllDestroyObject);
+                    RenderManager.RunInUIThread(RemoveAllDestroyObject);
                     RenderManager.RunInUIThread(AttachAllUnattachObject);
-
                     RenderManager.BeginRender();
                 }
                 else
@@ -97,6 +95,8 @@ namespace GameCore.Managers
                 gameObject.OnAttachToWorld();
                 objects.Add(gameObject);
             }
+
+            needAttachObjects.Clear();
         }
 
         private void RemoveAllDestroyObject()
@@ -121,7 +121,7 @@ namespace GameCore.Managers
         public void LoadWorld(string file)
         {
             ClearWorld();
-            objects.Clear();
+            //objects.Clear();
 
             if (File.Exists(file))
             {
@@ -145,39 +145,34 @@ namespace GameCore.Managers
 
             ClearWorld();
 
-            objects.Clear();
+            //objects.Clear();
 
             AddObject(new Terrain
             {
                 Name = "Земля"
             });
 
-            var player= new Player();
-            player.World = this;
-            player.Size = new Vector2(128, 128);
-            player.Position = new Vector2(0, 0);
-            player.ImageName = "player\\idle_1";
-            player.Name = "PlayerCharacter";
-            player.OnAttachToWorld();
-            AddObject(player);
+            AddObject(new MapObject
+            {
+                Size = new Vector2(128, 128),
+                Position = new Vector2(150, 200),
+                ImageName = "objects\\topdownTile_31",
+                Name = "Куст"
+            });
 
-            var npc = new NPC();
-            npc.World = this;
-            npc.Size = new Vector2(128, 128);
-            npc.Position = new Vector2(0, 0);
-            npc.ImageName = "player\\idle_1";
-            npc.Name = "PlayerCharacter";
-            npc.OnAttachToWorld();
-            AddObject(npc);
+            AddObject(new Player
+            {
+                Size = new Vector2(128, 128),
+                Position = new Vector2(0, 0),
+                Name = "PlayerCharacter"
+            });
 
-            var obj = new MapObject();
-            obj.World = this;
-            obj.Size = new Vector2(128, 128);
-            obj.Position = new Vector2(50, 50);
-            obj.ImageName = "objects\\topdownTile_31";
-            obj.Name = "Куст";
-            obj.OnAttachToWorld();
-            AddObject(obj);        
+            AddObject(new NPC
+            {
+                Size = new Vector2(128, 128),
+                Position = new Vector2(200, -150),
+                Name = "NPC1"
+            });
         }
 
         public void AddObject(GameObject gameObj)
@@ -203,11 +198,11 @@ namespace GameCore.Managers
             }
         }
 
-        public void RemoveObject(GameObject gameObject)
+        public void RemoveObject(GameObject gameObj)
         {
-            gameObject.OnDetach();
-            objects.Remove(gameObject);
-            gameObject.World = null;
+            gameObj.OnDetach();
+            objects.Remove(gameObj);
+            gameObj.World = null;
         }
 
         public void SaveWorld(String file)

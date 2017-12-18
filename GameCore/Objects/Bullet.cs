@@ -19,14 +19,14 @@ namespace GameCore.Objects
             }
 
             PhysicModel.IsCollision = false;
-            PhysicModel.OnINtersection += PhysicsMOdel_OnINtersection;
+            PhysicModel.OnIntersection += PhysicsMOdel_OnIntersection;
         }
 
-        private void PhysicsMOdel_OnINtersection(Models.PhysicModel a, Models.PhysicModel b)
+        private void PhysicsMOdel_OnIntersection(Models.PhysicModel a, Models.PhysicModel b)
         {
             if (b != Owner.PhysicModel)
             {
-                        b.MapObject.IsNeedDestroy = true;
+                b.MapObject.IsNeedDestroy = true;
                 IsNeedDestroy = true;
             };
         }
@@ -41,7 +41,6 @@ namespace GameCore.Objects
                 IsNeedDestroy = true;
                 return;
             }
-
 
             Position += Direction * Speed * dt;
         }

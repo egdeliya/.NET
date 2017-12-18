@@ -49,7 +49,7 @@ namespace Game
 
             WpfCanvas.Dispatcher.BeginInvoke((ThreadStart) delegate
             {
-                // есть высота, которую мы задали, а есть , которая реально получилась
+                // есть высота, которую мы задали, а есть которая реально получилась
                 // мы не можем задань Hight и Width, можем только получить, для этого нужно использовать
                 // ActualHieght и ActualWidth
                 ActiveCamera.Resolution = new Vector2((float)WpfCanvas.ActualWidth, (float)WpfCanvas.ActualHeight);

@@ -6,13 +6,13 @@ namespace GameCore.Objects
 {
     public class NPC: Character
     {
-        private float time;
+        //private float time;
         public AI Intellect { get; set; }
 
-        public NPC()
-        {
+        //public NPC()
+        //{
             
-        }
+        //}
 
         public override void OnAttachToWorld()
         {
@@ -24,6 +24,7 @@ namespace GameCore.Objects
         public override void OnTick(float dt)
         {
             Intellect.OnTick(dt);
+            base.OnTick(dt);
         }
     }
 }

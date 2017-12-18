@@ -15,7 +15,7 @@ namespace GameCore.Models
 
         public bool IsCollision { get; set; } = true;
 
-        public event Action<PhysicModel, PhysicModel> OnINtersection;
+        public event Action<PhysicModel, PhysicModel> OnIntersection;
 
         public virtual void Intersection(PhysicModel modelB)
         {
@@ -24,7 +24,8 @@ namespace GameCore.Models
 
         protected virtual void CallOnIntersection(PhysicModel arg1)
         {
-            OnINtersection?.Invoke(this, arg1);
+            if (OnIntersection != null)
+                OnIntersection.Invoke(this, arg1);
         }
     }
 }

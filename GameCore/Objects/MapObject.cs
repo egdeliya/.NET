@@ -64,7 +64,7 @@ namespace GameCore.Objects
         {
             if (World.RenderManager != null)
             {
-                RenderPrimitive = World.RenderManager?.CreatePrimitive();
+                RenderPrimitive = World.RenderManager.CreatePrimitive();
                 if (RenderPrimitive != null)
                 {
                     RenderPrimitive.Size = Size;
@@ -87,6 +87,8 @@ namespace GameCore.Objects
 
         public override void OnDetach()
         {
+            //if (World != null)
+            //{
             World.PhysicsManager.Models.Remove(PhysicModel);
 
             if (World.RenderManager != null && RenderPrimitive != null)
@@ -95,6 +97,8 @@ namespace GameCore.Objects
             }
 
             base.OnDetach();
+            //}
+            
         }
     }
 }

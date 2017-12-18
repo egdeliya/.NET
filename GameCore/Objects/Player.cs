@@ -14,42 +14,9 @@ namespace GameCore.Objects
         // анимации для игрока
         public Dictionary<string, Animation> Animations;
 
-        public Player()
-        {
-            Animations = new Dictionary<string, Animation>
-            {
-                {
-                    "idle", new Animation
-                    {
-                        PathMask = "player\\idle_{0}",
-                        ImageCount = 4,
-                        Speed = 3
-                    }
-                },
-                {
-                    "walk", new Animation
-                    {
-
-                        PathMask = "player\\walk_{0}",
-                        ImageCount = 4,
-                        Speed = .2f
-                    }
-                },
-                {
-                    "run", new Animation
-                    {
-
-                        PathMask = "player\\run_{0}",
-                        ImageCount = 4,
-                        Speed = .2f
-                    }
-                }
-            };
-        }
-
         public override void OnTick(float dt)
         {
-            Vector2 direction = Velocity;
+            Vector2 direction = new Vector2();
             var speed = Speed;
 
 
@@ -57,11 +24,11 @@ namespace GameCore.Objects
             {
                 var bullet = new Bullet
                 {
-                    Position = Position + new Vector2(40, -40),
+                    Position = Position + new Vector2(40, -30),
                     Direction = lastDir,
                     LifeTime = 1.5f,
                     Owner = this,
-                    Speed = 300
+                    Speed = 500
                 };
                 
                 World.AddObject(bullet);

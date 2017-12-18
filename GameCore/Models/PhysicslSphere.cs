@@ -17,11 +17,6 @@ namespace GameCore.Models
             {
                 radSum += sphere.Radius;
             }
-            else
-            {
-                
-            }
-
             //OnINtersection?.
 
             if (delta >= radSum)
