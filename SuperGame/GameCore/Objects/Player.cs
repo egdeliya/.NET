@@ -9,7 +9,6 @@ namespace GameCore.Objects
     public class Player : Character
     {
         private int lastShotTime = 0;
-        private bool isFirstShot = true;
         private Vector2 lastDir = new Vector2(1, 0);
 
         public override void OnTick(float dt)
@@ -20,7 +19,7 @@ namespace GameCore.Objects
             if (World.InputManager.IsKeyDown(Key.Space))
             {
                 var currentTime = DateTime.Now.Second;
-                if (currentTime - lastShotTime > 1)
+                if (Math.Abs(currentTime - lastShotTime) > 1)
                 {
                     lastShotTime = currentTime;
                     var bullet = new Bullet
@@ -33,6 +32,7 @@ namespace GameCore.Objects
                     };
                     World.AddObject(bullet);
                 }
+
             }
             
             if (World.InputManager.IsKeyDown(Key.W))

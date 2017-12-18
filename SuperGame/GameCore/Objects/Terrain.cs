@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Numerics;
 using GameCore.Render;
 
@@ -12,27 +13,36 @@ namespace GameCore.Objects
         private const int TerrainCellSize = 128;
         private const int TerrainSize = 16;
 
-        public List<string> Map { get; set; }
+        public string[] Map { get; set; }
 
-        public Terrain()
+        public Terrain(string terrainFile)
         {
-            Map = new List<string>();
+            
+
+            Map = new string[TerrainSize];
+
+            Map = File.ReadAllLines(terrainFile);
+
+            //foreach (var row in data)
+            //{
+            //    Map.Add(row);
+            //}
         }
 
         public override void OnAttachToWorld()
         {
-            if (Map.Count == 0)
-            {
-                for (var i = 0; i < TerrainSize; i++)
-                {
-                    var row = "";
-                    for (var j = 0; j < TerrainSize; j++)
-                    {
-                        row += "25 ";
-                    }
-                    Map.Add(row);
-                }
-            }
+            //if (Map.Count == 0)
+            //{
+            //    for (var i = 0; i < TerrainSize; i++)
+            //    {
+            //        var row = "";
+            //        for (var j = 0; j < TerrainSize; j++)
+            //        {
+            //            row += "25 ";
+            //        }
+            //        Map.Add(row);
+            //    }
+            //}
 
             if (World.RenderManager != null)
             {

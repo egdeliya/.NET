@@ -43,7 +43,7 @@ namespace GameCore.Objects
                 }
             };
 
-            Hp = 100;
+            Hp = 40;
             Speed = 250;
         }
 

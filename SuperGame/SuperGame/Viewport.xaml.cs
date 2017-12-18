@@ -20,6 +20,7 @@ namespace SuperGame
     public partial class Viewport : UserControl
     {
         private const string saveFile = "gamedata\\save.json";
+        private const string terrainFile = "gamedata\\terrain.txt";
         public World World { get; set; }
 
         public Viewport()
@@ -34,7 +35,7 @@ namespace SuperGame
             World = new World();
             World.RenderManager = new WPFRenderMenager(MainCanvas);
 
-            World.CreateDefaultWorld();
+            World.CreateDefaultWorld(terrainFile);
 
             World.BeginSimulation();
 
@@ -56,6 +57,7 @@ namespace SuperGame
 
         private void ButtonLoad_Click(object sender, RoutedEventArgs e)
         {
+            //World.LoadWorld(terrainFile);
             World.LoadWorld(saveFile);
         }
 
@@ -66,7 +68,7 @@ namespace SuperGame
 
         private void ButtonCreate_Click(object sender, RoutedEventArgs e)
         {
-            World.CreateDefaultWorld();
+            World.CreateDefaultWorld(terrainFile);
         }
 
         public void Close()

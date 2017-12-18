@@ -120,14 +120,11 @@ namespace GameCore.Managers
             }
         }
 
-        public void CreateDefaultWorld()
+        public void CreateDefaultWorld(string terrainFile)
         {
             ClearWorld();
 
-            AddObject(new Terrain
-            {
-                Name = "Земля"
-            });
+            AddObject(new Terrain(terrainFile));
 
             AddObject(new MapObject
             {
