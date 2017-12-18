@@ -99,9 +99,10 @@ namespace GameCore.Managers
             isSimulation = false;
         }
 
-        public void LoadWorld(string file)
+        public void LoadWorld(string file, string terrainFile)
         {
             ClearWorld();
+            AddObject(new Terrain(terrainFile));
 
             if (File.Exists(file))
             {
@@ -118,6 +119,7 @@ namespace GameCore.Managers
                     AddObject(gameObject);
                 }
             }
+
         }
 
         public void CreateDefaultWorld(string terrainFile)
@@ -180,9 +182,17 @@ namespace GameCore.Managers
 
         public void Save(string file)
         {
+            var needToSaveObjects = new List<GameObject>();
+            foreach (var obj in objects)
+            {
+                if (obj.Name.Equals("Terrain"))
+                    continue;
+                needToSaveObjects.Add(obj);
+            }
+
             var saveModel = new SaveModel
             {
-                Objects = objects,
+                Objects = needToSaveObjects,
                 Date = DateTime.Now
             };
 

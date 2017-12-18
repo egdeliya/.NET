@@ -18,10 +18,11 @@ namespace GameCore.Objects
         public Terrain(string terrainFile)
         {
             
-
             Map = new string[TerrainSize];
 
             Map = File.ReadAllLines(terrainFile);
+
+            Name = "Terrain";
 
             //foreach (var row in data)
             //{

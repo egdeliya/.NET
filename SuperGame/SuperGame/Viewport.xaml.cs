@@ -58,7 +58,7 @@ namespace SuperGame
         private void ButtonLoad_Click(object sender, RoutedEventArgs e)
         {
             //World.LoadWorld(terrainFile);
-            World.LoadWorld(saveFile);
+            World.LoadWorld(saveFile, terrainFile);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
